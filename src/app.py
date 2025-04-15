@@ -4,7 +4,7 @@ import streamlit as st
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
@@ -26,7 +26,7 @@ def get_vectorstore_from_url(url):
         text_splitter = RecursiveCharacterTextSplitter()
         chunks = text_splitter.split_documents(documents)
 
-        vector_store = Chroma.from_documents(
+        vector_store = FAISS.from_documents(
             chunks, GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         )
         return vector_store
